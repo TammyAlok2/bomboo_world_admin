@@ -44,30 +44,7 @@ const initialState: UserState = {
   address: null,
 };
 
-export const createDoctor = createAsyncThunk(
-  "doctor/register",
-  async (data: RegisterData) => {
-    console.log(data);
-    try {
-      const res = axiosInstance.post("doctor/register", data, {
-        withCredentials: true,
-      });
-      toast.promise(res, {
-        loading: "Wait! creating doctor ",
-        success: (data) => data?.data?.message,
-        error: "Failed to create Doctors",
-      });
-      // Extract the token from the response
-      const response = await res;
 
-      return response.data;
-    } catch (error: any) {
-      throw error;
-    } finally {
-      console.log("finally");
-    }
-  }
-);
 
 export const getAllCategories = createAsyncThunk(
   "admin/getAllCategories",
@@ -189,31 +166,22 @@ export const AdminLogin = createAsyncThunk(
   }
 )
 
-export const allPatientEnquiry = createAsyncThunk(
-  "admin/allPatientEnquiry",
-  async () => {
+export const forgetPassword = createAsyncThunk(
+  "admin/adminRegister",
+  async (data: RegisterData, { rejectWithValue }) => {
     try {
-      const res = axiosInstance.get("admin/getAllPatientEnquiry", {
-        withCredentials: true,
-      });
-
-      toast.promise(res, {
-        loading: "Fetching enquiries ",
-        success: (data) => data?.data?.message,
-        error: "Failed to find enquiry ",
-      });
-
-      // Extract the token from the response
-      const response = await res;
-
-      return response.data;
+      const res = await axiosInstance.post("auth/forget", data);
+      if (res.data.success) {
+        toast.success("Register Success")
+      }
+      return res.data;
     } catch (error: any) {
-      throw error;
-    } finally {
-      console.log("finally");
+      return rejectWithValue(error.response.data);
     }
   }
-);
+)
+
+
 
 export const fetchAllUsers = createAsyncThunk(
   "admin/fetchAllUsers",
@@ -278,9 +246,6 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createDoctor.fulfilled, (state, action: PayloadAction<any>) => {
-        state.data = action?.payload?.data;
-      })
       .addCase(getAllCategories.pending, (state) => {
         state.loading = true;
         state.error = null;

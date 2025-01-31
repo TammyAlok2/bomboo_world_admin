@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddProducts, getAllCategories, getAllProduct, updateProduct } from '@/app/GlobalRedux/slice/AuthSlice';
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { AppDispatch } from "../GlobalRedux/store";
+import { AppDispatch } from '../GlobalRedux/store';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import DashboardLayout from '../dashboard/page';
 import Image from 'next/image';

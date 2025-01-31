@@ -10,6 +10,7 @@ interface UserState {
 
 const initialState: UserState = {
   categories: [],
+  materials:[],
   couponse: [],
   loading: false,
   error: null,
@@ -83,6 +84,69 @@ export const getAllCoupons = createAsyncThunk(
 )
 
 
+export const getAllMaterials = createAsyncThunk(
+  "admin/addMaterial",
+  async()=>{
+    try {
+      const res = await axiosInstance.get(`admin/allMaterials`, {
+        withCredentials: true,
+      });
+      console.log("allMaterials res: ", res?.data);
+      
+      // Extract the token from the response
+
+      return res?.data?.data;
+    } catch (error: any) {
+      throw error;
+    } finally {
+      console.log("finally");
+    }
+  }
+)
+export const deleteMaterial = createAsyncThunk(
+  "admin/deleteMaterial",
+  async (id: any, { rejectWithValue }) => {
+    try {
+      const res = await axiosInstance.delete(`admin/delete-material/${id}`, {
+        withCredentials: true,
+        });
+        console.log("Delete material ", res);
+        return res?.data?.data;
+        } catch (error: any) {
+          return rejectWithValue(error?.response?.data?.message || 'Failed to delete material');
+        }
+    }
+)
+
+export const createMaterial = createAsyncThunk(
+  "admin/createCoupon",
+  async (couponData: any, { rejectWithValue }) => {
+    try {
+      const res = await axiosInstance.post(`admin/add-material`, couponData, {
+        withCredentials: true,
+      });
+      return res?.data?.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to create material');
+    }
+  }
+);
+
+export const updateMaterial = createAsyncThunk(
+  "admin/createCoupon",
+  async (couponData: any, { rejectWithValue }) => {
+    try {
+      const res = await axiosInstance.put(`admin/update-material`, couponData, {
+        withCredentials: true,
+      });
+      return res?.data?.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to update material');
+    }
+  }
+);
+
+
 const productSlice = createSlice({
   name: "product",
   initialState,
@@ -95,6 +159,9 @@ const productSlice = createSlice({
       })
       .addCase(getAllCoupons?.fulfilled, (state, action: PayloadAction<any>)=>{
         state.couponse = action?.payload;
+      })
+      .addCase(getAllMaterials?.fulfilled, (state, action: PayloadAction<any>)=>{
+        state.materials = action?.payload;
       })
   },
 });

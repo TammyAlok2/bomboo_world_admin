@@ -37,9 +37,9 @@ const enquirySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllEnquiries?.fulfilled, (state, action: PayloadAction<any>)=>{
-        state?.enquiries = action?.payload;
+        state.enquiries = action?.payload;
       })
-  },
+  }
 });
 
 export default enquirySlice.reducer;

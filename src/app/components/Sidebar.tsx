@@ -40,6 +40,14 @@ const navItems: NavItem[] = [
     ]
   },
   {
+    title: 'Product-Material',
+    icon: <Box className="w-5 h-5" />,
+    children: [
+      { title: 'Add Material', href: '/add-material', icon: <PlusCircle className="w-4 h-4" /> },
+      { title: 'Material List', href: '/all-materials', icon: <ShoppingBag className="w-4 h-4" /> },
+    ]
+  },
+  {
     title: 'Order',
     icon: <FileText className="w-5 h-5" />,
     children: [
