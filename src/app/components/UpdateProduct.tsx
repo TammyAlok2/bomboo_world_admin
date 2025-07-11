@@ -11,13 +11,13 @@ import DashboardLayout from '../dashboard/page';
 import Image from 'next/image';
 
 interface FormData {
-  // id: string;
+  id: string;
   name: string;
   description: string;
   price: string;
   stock: string;
   category: string;
-  // subCategory: string;
+   subCategory: string;
   specifications: string;
   images: [];
 }
@@ -28,6 +28,7 @@ interface Errors {
   price?: string;
   stock?: string;
   category?: string;
+  images?: string;
 }
 
 export default function UpdateProduct() {
@@ -41,7 +42,7 @@ export default function UpdateProduct() {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const [formData, setFormData] = useState<FormData>({
-    // id: productId,
+    id: productId,
     name: "",
     description: "",
     price: "",
@@ -87,7 +88,7 @@ export default function UpdateProduct() {
     setImages((prev) => [...prev, ...filesArray]);
 
     // Add the selected images to the form data
-    setFormData((prev) => ({
+    setFormData((prev:any) => ({
       ...prev,
       images: [...prev.images, ...filesArray],
     }));
@@ -95,10 +96,10 @@ export default function UpdateProduct() {
 
   // Add function to handle image removal
   const handleRemoveImage = (index: number) => {
-    setImages((prev) => prev.filter((_, i) => i !== index));
-    setFormData((prev) => ({
+    setImages((prev:any) => prev.filter((_:any, i:any) => i !== index));
+    setFormData((prev:any) => ({
       ...prev,
-      images: prev.images.filter((_, i) => i !== index),
+      images: prev.images.filter((_:any, i:any) => i !== index),
     }));
   };
 
